@@ -1,4 +1,4 @@
-package com.tubes;
+package com.monstersaku;
 
 import java.util.Random;
 

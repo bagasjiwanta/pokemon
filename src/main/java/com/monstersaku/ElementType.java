@@ -1,4 +1,4 @@
-package com.tubes;
+package com.monstersaku;
 
 /* INI CUMA DUMMY BUAT NYELESAIN MOVE */
 

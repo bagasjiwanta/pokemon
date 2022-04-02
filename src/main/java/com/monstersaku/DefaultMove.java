@@ -1,4 +1,4 @@
-package com.tubes;
+package com.monstersaku;
 
 public class DefaultMove extends Move {
     private int basePower;

@@ -1,4 +1,4 @@
-package com.tubes;
+package com.monstersaku;
 
 public abstract class Move {
     private String name;

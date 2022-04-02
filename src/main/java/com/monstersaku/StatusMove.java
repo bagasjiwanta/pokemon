@@ -1,4 +1,4 @@
-package com.tubes;
+package com.monstersaku;
 
 public class StatusMove extends Move{
     private StatusCondition condition;
