@@ -3,22 +3,22 @@ package com.monstersaku;
 import java.util.List;
 import java.util.ArrayList;
 
-public class Stats<T> {
+public class Stats {
 
-    private T healthPoint;
-    private T attack;
-    private T defense;
-    private T specialAttack;
-    private T specialDefense;
-    private T speed;
+    private double healthPoint;
+    private double attack;
+    private double defense;
+    private double specialAttack;
+    private double specialDefense;
+    private double speed;
 
     public Stats(
-        T healthPoint, 
-        T attack,
-        T defense,
-        T specialAttack,
-        T specialDefense,
-        T speed
+        double healthPoint, 
+        double attack,
+        double defense,
+        double specialAttack,
+        double specialDefense,
+        double speed
     ) {
         setHealthPoint(healthPoint);
         setAttack(attack);
@@ -28,56 +28,56 @@ public class Stats<T> {
         setSpeed(speed);
     }
 
-    public T getHealthPoint() {
+    public double getHealthPoint() {
         return this.healthPoint;
     }
 
-    public void setHealthPoint(T healthPoint) {
+    public void setHealthPoint(double healthPoint) {
         this.healthPoint = healthPoint;
     }
 
-    public T getAttack() {
+    public double getAttack() {
         return this.attack;
     }
 
-    public void setAttack(T attack) {
+    public void setAttack(double attack) {
         this.attack = attack;
     }
 
-    public T getDefense() {
+    public Double getDefense() {
         return this.defense;
     }
 
-    public void setDefense(T defense) {
+    public void setDefense(Double defense) {
         this.defense = defense;
     }
 
-    public T getSpecialAttack() {
+    public double getSpecialAttack() {
         return this.specialAttack;
     }
 
-    public void setSpecialAttack(T specialAttack) {
+    public void setSpecialAttack(double specialAttack) {
         this.specialAttack = specialAttack;
     }
 
-    public T specialDefense() {
+    public double specialDefense() {
         return this.specialDefense;
     }
 
-    public void setSpecialDefense(T specialDefense) {
+    public void setSpecialDefense(double specialDefense) {
         this.specialDefense = specialDefense;
     }
 
-    public T getSpeed() {
+    public double getSpeed() {
         return this.speed;
     }
 
-    public void setSpeed(T speed) {
+    public void setSpeed(double speed) {
         this.speed = speed;
     }
 
-    public List<T> getAll() {
-        List<T> statList = new ArrayList<T>();
+    public List<Double> getAll() {
+        List<Double> statList = new ArrayList<Double>();
         statList.add(this.healthPoint);
         statList.add(this.attack);
         statList.add(this.defense);

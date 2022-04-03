@@ -5,7 +5,7 @@ import java.util.List;
 public class Monster {
     private String nama;
     private List<ElementType> elementTypes;
-    private Stats<Double> baseStats;
+    private Stats baseStats;
 
     public Monster() {}
 
@@ -17,7 +17,7 @@ public class Monster {
         return this.elementTypes;
     }
 
-    public Stats<Double> getBaseStats() {
+    public Stats getBaseStats() {
         return this.baseStats;
     }
 }
