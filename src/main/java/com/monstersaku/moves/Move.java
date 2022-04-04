@@ -5,28 +5,28 @@ import com.monstersaku.enums.ElementType;
 import com.monstersaku.enums.MoveType;
 
 public abstract class Move {
+    protected int id;
     protected String name;
     protected ElementType elementType;
     protected int accuracy;
     protected int priority;
     protected int ammunition;
-    protected String target;
 
     public Move (
+        int id,
         MoveType moveType,
         String name,
         ElementType elementType,
         int accuracy,
         int priority,
-        int ammunition,
-        String target
+        int ammunition
     ) {
+        this.id = id;
         this.name = name;
         this.elementType = elementType;
         this.accuracy = accuracy;
         this.priority = priority;
         this.ammunition = ammunition;
-        this.target = target;
     }
 
     public String getName () {

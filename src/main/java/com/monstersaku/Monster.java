@@ -5,13 +5,14 @@ import java.util.List;
 import com.monstersaku.enums.ElementType;
 import com.monstersaku.enums.StatusCondition;
 import com.monstersaku.moves.Move;
+import com.monstersaku.pools.MovePool;
 
 public class Monster {
     private String nama;
     private List<ElementType> elementTypes;
     private Stats baseStats;
     private StatusCondition statusCondition;
-    private List<Move> moves;
+    private MovePool movePool;
 
     public Monster (
         String nama,
@@ -23,7 +24,9 @@ public class Monster {
         this.elementTypes = elementTypes;
         this.baseStats = baseStats;
         this.statusCondition = StatusCondition.NONE;
-        this.moves = moves;
+        for (Move m : moves) {
+            this.movePool.add(m);
+        }
     }
 
     public String getNama() {
@@ -50,8 +53,10 @@ public class Monster {
         return this.statusCondition;
     }
 
-    public List<Move> getMoves() {
-        return this.moves;
+    public void displayMoves() {
+        System.out.println("Pokemon " + this.nama + " memiliki move-move berikut: ");
+        for (int x = 0; x < movePool.getNumberOfMoves(); x++) {
+            System.out.println(x + ". " + movePool.getMoveByIndex(x));
+        }
     }
-
 }

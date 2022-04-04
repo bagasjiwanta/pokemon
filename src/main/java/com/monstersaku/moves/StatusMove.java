@@ -6,8 +6,10 @@ import com.monstersaku.enums.StatusCondition;
 import com.monstersaku.pools.EffectivityPool;
 
 public class StatusMove extends Move {
-    
+    private String target;
+    private StatusCondition effectCondition;
     public StatusMove (
+        int id,
         MoveType moveType,
         String name,
         ElementType elementType,
@@ -15,17 +17,19 @@ public class StatusMove extends Move {
         int priority,
         int ammunition,
         String target,
-        StatusCondition statusCondition
+        StatusCondition effectCondition
     ) {
         super (
+            id,
             moveType,
             name,
             elementType,
             accuracy,
             priority,
-            ammunition,
-            target
+            ammunition
         );
+        this.target = target;
+        this.effectCondition = effectCondition;
     }
 
     public void execute(Monster source, Monster target) {

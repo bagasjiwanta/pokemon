@@ -2,8 +2,10 @@ package com.monstersaku;
 
 import com.monstersaku.enums.ElementType;
 import com.monstersaku.moves.DefaultMove;
+import com.monstersaku.moves.Move;
 import com.monstersaku.pools.EffectivityPool;
 import com.monstersaku.pools.MonsterPool;
+import com.monstersaku.pools.MovePool;
 import com.monstersaku.util.CSVReader;
 
 import java.io.File;
@@ -21,6 +23,7 @@ public class Main {
     public static void main(String[] args) {
         EffectivityPool effectivityPool = EffectivityPool.getEffectivityPool();
         MonsterPool monsterPool = new MonsterPool(false);
+        MovePool movePool = new MovePool(false);
         List<CSVReader> readers = new ArrayList<CSVReader>();
         CSVReader currentReader;
 
@@ -54,6 +57,22 @@ public class Main {
         } catch (Exception e) { }
         System.out.println(effectivityPool.getEffectivity(ElementType.FIRE, ElementType.WATER));
         System.out.println(effectivityPool.getEffectivity(ElementType.WATER, ElementType.FIRE));
+
+        // read move pool
+        currentReader = readers.get(1);
+        currentReader.setSkipHeader(true);
+        try {
+            List<String[]> lines = currentReader.read();
+            for (String[] line : lines) {
+                Move move;
+                
+                if (line[1].equals("STATUS")) {
+
+                } else {
+                    
+                }
+            }
+        } 
 
         // read monster pool
         currentReader = readers.get(0);
@@ -98,21 +117,5 @@ public class Main {
                 }
             }
         } catch (Exception e) { }
-
-        // for (CSVReader reader : readers) {
-        //     reader.setSkipHeader(true);
-        //     try {
-        //         List<String[]> lines = reader.read();
-        //         for (String[] line : lines) {
-        //             for (String word : line) {
-        //                 System.out.printf("%s ", word);
-        //             }
-        //             System.out.println();
-        //         }
-        //         System.out.println();
-        //     } catch (Exception e) {
-        //         // do nothing
-        //     }
-        // }
     }
 }

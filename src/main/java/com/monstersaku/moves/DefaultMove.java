@@ -6,22 +6,22 @@ import com.monstersaku.pools.EffectivityPool;
 
 public class DefaultMove extends Move {
     public DefaultMove (
+        int id,
         MoveType moveType,
         String name,
         ElementType elementType,
         int accuracy,
         int priority,
-        int ammunition,
-        String target
+        int ammunition
     ) {
         super (
+            id,
             moveType,
             name,
             elementType,
             accuracy,
             priority,
-            ammunition,
-            target
+            ammunition
         );
     }
 

@@ -5,23 +5,24 @@ import com.monstersaku.enums.MoveType;
 import com.monstersaku.pools.EffectivityPool;
 
 public class SpecialMove extends Move {
+
     public SpecialMove (
+        int id,
         MoveType moveType,
         String name,
         ElementType elementType,
         int accuracy,
         int priority,
-        int ammunition,
-        String target
+        int ammunition
     ) {
         super (
+            id,
             moveType,
             name,
             elementType,
             accuracy,
             priority,
-            ammunition,
-            target
+            ammunition
         );
     }
 
