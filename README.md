@@ -1,22 +1,24 @@
-# IF2212 Project Template
+# Tugas Besar IF2212 Kelompok 8 : Aplikasi Pokemon
 
-Here is an example of project using gradle as the build tools.
-Try running these commands:
+[Spesifikasi tugas besar](https://docs.google.com/document/d/17rIQtQL1_2pHDLgipyDmX67gwjx3U4-C/edit)
 
-On linux:
-```bash
+## Anggota Kelompok
+
+- 18220047	Dhiya Risalah Ghaida
+- 18220005	Muhammad Rifqi Riansyah M.
+- 18220087	Mochammad Ramadhany
+- 18220053	I Putu Andika Bagas Jiwanta
+
+## Command untuk menjalankan :
+
+### Build
+```cmd
+gradle wrapper
+
+./gradlew build
+```
+
+### Run
+```cmd
 ./gradlew run
 ```
-
-On windows:
-```cmd
-gradlew.bat run
-```
-
-Notice that it will run the `Main.java` inside the `com.monstersaku` package.
-In the command line you can see the data that is being read by `CSVReader.java`.
-
-What happen is when you use `./gradlew run`, it will start the main function in your app.
-For this app, the main function lives in `Main.java`.
-
-You can explore more about gradle [here](https://guides.gradle.org/creating-new-gradle-builds/)
