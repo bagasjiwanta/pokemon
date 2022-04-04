@@ -1,9 +1,9 @@
 package com.monstersaku.moves;
-import com.monstersaku.EffectivityPool;
-import com.monstersaku.ElementType;
 import com.monstersaku.Monster;
-import com.monstersaku.MoveType;
-import com.monstersaku.StatusCondition;
+import com.monstersaku.enums.ElementType;
+import com.monstersaku.enums.MoveType;
+import com.monstersaku.enums.StatusCondition;
+import com.monstersaku.pools.EffectivityPool;
 
 public class StatusMove extends Move {
     

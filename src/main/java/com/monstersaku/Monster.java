@@ -2,6 +2,10 @@ package com.monstersaku;
 
 import java.util.List;
 
+import com.monstersaku.enums.ElementType;
+import com.monstersaku.enums.StatusCondition;
+import com.monstersaku.moves.Move;
+
 public class Monster {
     private String nama;
     private List<ElementType> elementTypes;

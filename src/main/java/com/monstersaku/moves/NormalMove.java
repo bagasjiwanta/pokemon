@@ -1,8 +1,8 @@
 package com.monstersaku.moves;
-import com.monstersaku.EffectivityPool;
-import com.monstersaku.ElementType;
 import com.monstersaku.Monster;
-import com.monstersaku.MoveType;
+import com.monstersaku.enums.ElementType;
+import com.monstersaku.enums.MoveType;
+import com.monstersaku.pools.EffectivityPool;
 
 public class NormalMove extends Move{
 

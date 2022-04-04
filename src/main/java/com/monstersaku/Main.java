@@ -1,5 +1,9 @@
 package com.monstersaku;
 
+import com.monstersaku.enums.ElementType;
+import com.monstersaku.moves.DefaultMove;
+import com.monstersaku.pools.EffectivityPool;
+import com.monstersaku.pools.MonsterPool;
 import com.monstersaku.util.CSVReader;
 
 import java.io.File;
@@ -58,6 +62,7 @@ public class Main {
             List<String[]> lines = currentReader.read();
             for (String[] line : lines) {
                 try {
+                    // read monster's element type
                     List<ElementType> elementTypes = new ArrayList<ElementType>();
                     for (String eltype : line[2].split(",")) {
                         try {
@@ -67,7 +72,7 @@ public class Main {
                             break;
                         }
                     }
-                    
+                    // read monster's stats
                     List<Double> statsList = new ArrayList<Double>();
                     for (String stat : line[3].split(",")) {
                         try {
@@ -79,12 +84,15 @@ public class Main {
                     }
                     Stats stats;
                     try {
+                        // add monster to global monster pool
                         stats = new Stats(statsList);
+                        Monster monster = new Monster(line[1], elementTypes, statsList, null);
+                        monsterPool.add(monster);
                     } catch (IllegalArgumentException e) {
                         System.out.println(e.getMessage());
                     }
-                    Monster monster = new Monster(line[0], elementTypes, stats, )
-                    monsterPool.add()
+
+
                 } catch (Exception e) {
                     System.out.println(e.getMessage());
                 }

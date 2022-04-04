@@ -1,4 +1,4 @@
-package com.monstersaku;
+package com.monstersaku.enums;
 import java.util.ArrayList;
 import java.util.List;
 

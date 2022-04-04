@@ -1,4 +1,4 @@
-package com.monstersaku;
+package com.monstersaku.enums;
 
 public enum MoveType {
     NORMAL, SPECIAL, DEFAULT, STATUS

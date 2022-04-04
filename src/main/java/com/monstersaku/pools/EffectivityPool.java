@@ -1,6 +1,8 @@
-package com.monstersaku;
+package com.monstersaku.pools;
 
 import java.util.HashMap;
+
+import com.monstersaku.enums.ElementType;
 
 public class EffectivityPool {
 

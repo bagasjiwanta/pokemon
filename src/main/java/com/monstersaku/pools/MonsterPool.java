@@ -1,13 +1,15 @@
-package com.monstersaku;
+package com.monstersaku.pools;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import com.monstersaku.Monster;
 
 public class MonsterPool {
     private List<Monster> monsterList;
     private Boolean hasOwner;
 
-    private MonsterPool (Boolean hasOwner) {
+    public MonsterPool (Boolean hasOwner) {
         this.monsterList = new ArrayList<Monster>();
         this.hasOwner = hasOwner;
     }
