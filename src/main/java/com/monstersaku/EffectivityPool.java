@@ -4,26 +4,29 @@ import java.util.HashMap;
 
 public class EffectivityPool {
 
+    private static EffectivityPool INSTANCE = null;
+
     private HashMap<String, Double> effectList;
     
-    public EffectivityPool () {
+    private EffectivityPool () {
         this.effectList = new HashMap<String, Double>();
     }
 
-    public void add(String source, String target, double effectivity) {
-        String sourcetarget = source + "," + target;
-        String targetsource = target + "," + source;
-        this.effectList.put(sourcetarget, effectivity);
-        try {
-            this.effectList.put(targetsource, 1 / effectivity);
-        } catch (Exception e) {
-            System.out.println("EffectivityPool.add");
+    public static EffectivityPool getEffectivityPool () {
+        if (INSTANCE == null) {
+            INSTANCE = new EffectivityPool();
         }
+        return INSTANCE;
+    }
+
+    public void add(ElementType source, ElementType target, double effectivity) {
+        String key = source.toString() + "," + target.toString();
+        this.effectList.put(key, effectivity);
     } 
 
     public double getEffectivity (ElementType source, ElementType target) {
-        String args = source.getName() + "," + target.getName();
-        double effectivity = this.effectList.get(args);
+        String key = source.toString() + "," + target.toString();
+        double effectivity = this.effectList.get(key);
         if (effectivity == 0.0) {
             return -1;
         } else {

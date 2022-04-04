@@ -1,24 +1,15 @@
 package com.monstersaku;
 import java.util.ArrayList;
+import java.util.List;
 
 public enum ElementType {
-    NORMAL ("NORMAL"),
-    FIRE ("FIRE"),
-    WATER ("WATER"),
-    GRASS ("GRASS");
+    NORMAL,
+    FIRE,
+    WATER,
+    GRASS;
 
-    private String name;
-
-    ElementType(String name) {
-        this.name = name;
-    }
-
-    public String getName() {
-        return this.name;
-    }
-
-    public static ArrayList<ElementType> getValues () {
-        ArrayList<ElementType> list = new ArrayList<ElementType>();
+    public static List<ElementType> getValues () {
+        List<ElementType> list = new ArrayList<ElementType>();
         list.add(ElementType.NORMAL);
         list.add(ElementType.FIRE);
         list.add(ElementType.WATER);

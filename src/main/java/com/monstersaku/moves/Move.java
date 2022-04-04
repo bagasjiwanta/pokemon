@@ -1,24 +1,32 @@
-package com.monstersaku;
+package com.monstersaku.moves;
+
+import com.monstersaku.ElementType;
+import com.monstersaku.Monster;
+import com.monstersaku.MoveType;
 
 public abstract class Move {
-    private String name;
-    private ElementType elementType;
-    private int accuracy;
-    private int priority;
-    private int ammunition;
+    protected String name;
+    protected ElementType elementType;
+    protected int accuracy;
+    protected int priority;
+    protected int ammunition;
+    protected String target;
 
     public Move (
+        MoveType moveType,
         String name,
         ElementType elementType,
         int accuracy,
         int priority,
-        int ammunition
+        int ammunition,
+        String target
     ) {
         this.name = name;
         this.elementType = elementType;
         this.accuracy = accuracy;
         this.priority = priority;
         this.ammunition = ammunition;
+        this.target = target;
     }
 
     public String getName () {
@@ -61,5 +69,5 @@ public abstract class Move {
         this.ammunition = ammunition;
     }
 
-    public abstract void execute (Monster source, Monster target, EffectivityPool E);
+    public abstract void execute (Monster source, Monster target);
 }

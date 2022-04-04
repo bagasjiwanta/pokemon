@@ -12,20 +12,16 @@ public class Stats {
     private double specialDefense;
     private double speed;
 
-    public Stats(
-        double healthPoint, 
-        double attack,
-        double defense,
-        double specialAttack,
-        double specialDefense,
-        double speed
-    ) {
-        setHealthPoint(healthPoint);
-        setAttack(attack);
-        setDefense(defense);
-        setSpecialAttack(specialAttack);
-        setSpecialDefense(specialDefense);
-        setSpeed(speed);
+    public Stats (List<Double> stats) throws IllegalArgumentException {
+        if (stats.size() < 6) {
+            throw new IllegalArgumentException();
+        }
+        setHealthPoint(stats.get(0));
+        setAttack(stats.get(1));
+        setDefense(stats.get(2));
+        setSpecialAttack(stats.get(3));
+        setSpecialDefense(stats.get(4));
+        setSpeed(stats.get(5));
     }
 
     public double getHealthPoint() {

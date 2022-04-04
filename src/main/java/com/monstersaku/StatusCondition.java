@@ -1,5 +1,5 @@
 package com.monstersaku;
 
 public enum StatusCondition {
-    BURN, POISON, SLEEP, PARALYZE
+    NONE, BURN, POISON, SLEEP, PARALYZE
 }
