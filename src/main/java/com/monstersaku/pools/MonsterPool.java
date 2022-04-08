@@ -11,14 +11,14 @@ import com.monstersaku.util.CSVReader;
 
 public class MonsterPool {
     private List<Monster> monsterList;
-    private Boolean hasOwner;
     public static CSVReader reader;
     public static long randSeed = 1;
+    private int currentMonster;
 
     // generate list of 6 random numbers
     private List<Integer> randSixInt(int max) {
         Random random = new Random(randSeed);
-        randSeed ++;
+        MonsterPool.randSeed ++;
         List<Integer> randomIntegers = new ArrayList<Integer>();
         for (int i = 0; i < 6; i++) {
             randomIntegers.add(random.nextInt(max + 1));
@@ -26,26 +26,40 @@ public class MonsterPool {
         return randomIntegers;
     }
 
-    public MonsterPool (Boolean hasOwner) {
+    public MonsterPool () {
         this.monsterList = new ArrayList<Monster>();
-        this.hasOwner = hasOwner;
+        currentMonster = 0;
+    }
+
+    public void printMonsters (String pname) {
+        System.out.println("\nMonster yang dimiliki : " + pname);
+        for (int i = 0;i < 6;i++) {
+            System.out.println(i + ". " + monsterList.get(i).getNama());
+        }
     }
 
     public void add (Monster monster) {
-        if (this.hasOwner && this.monsterList.size() >= 6) {
+        if (this.monsterList.size() >= 6) {
             return;
         }
         this.monsterList.add(monster);
-    }
-
-    public Boolean hasOwner () {
-        return this.hasOwner;
     }
 
     public static void setReader (CSVReader csvreader) {
         if (MonsterPool.reader == null) {
             MonsterPool.reader = csvreader;
         }
+    }
+
+    public Monster currMonster () {
+        return this.monsterList.get(this.currentMonster);
+    }
+
+    public void setPokemon (int index) {
+        // validasi dulu indexnya <=6 dan >=1
+        // trus cek pokemonnya masih idup atau ga, klo udh mati, throw error aj atau print "pokemon dh mati"
+
+        this.currentMonster = index;
     }
 
     public void readSixRandomMonster () {

@@ -64,10 +64,15 @@ public class Monster {
         this.statusCondition = effect;
     }
 
+    public Move getMoveById(int id) {
+        return movePool.getMoveByIndex(id - 1);
+    }
+
     public void displayMoves() {
         System.out.println("Pokemon " + this.nama + " memiliki move-move berikut: ");
         for (int x = 0; x < movePool.getNumberOfMoves(); x++) {
-            System.out.println(x + ". " + movePool.getMoveByIndex(x));
+            System.out.println((x+1) + ". nama : " + movePool.getMoveByIndex(x).getName() + 
+            ", amunisi : " + movePool.getMoveByIndex(x).getAmmunition());
         }
     }
 

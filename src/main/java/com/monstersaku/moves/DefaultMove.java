@@ -3,6 +3,7 @@ import com.monstersaku.Monster;
 import com.monstersaku.enums.ElementType;
 import com.monstersaku.enums.MoveType;
 import com.monstersaku.enums.StatusCondition;
+import com.monstersaku.pools.EffectivityPool;
 
 public class DefaultMove extends Move {
     private static final int basePower = 50;
@@ -11,15 +12,20 @@ public class DefaultMove extends Move {
         super(id, MoveType.DEFAULT, name, ElementType.NORMAL, 100, 0, 1);
     }
 
-    public void execute(Monster allyMonster, Monster enemyMonster){
-        if (allyMonster.getEffect().equals(StatusCondition.BURN)) {
-            double damage = (basePower * allyMonster.getStats().getAttack()/enemyMonster.getStats().getDefense() + 2) * Math.random()*(1-0.85+1)+0.85 * 1 /** ElementEffectivity */ * 0.5 /** Burn */;
-            enemyMonster.getStats().setHealthPoint(damage);
-            allyMonster.getStats().setHealthPoint(allyMonster.getStats().getMaxHP()/4);
-        } else {
-            double damage = (basePower * allyMonster.getStats().getAttack()/enemyMonster.getStats().getDefense() + 2) * Math.random()*(1-0.85+1)+0.85 * 1 /** ElementEffectivity */ * 1 /** Burn */;
-            enemyMonster.getStats().setHealthPoint(damage);
-            allyMonster.getStats().setHealthPoint(allyMonster.getStats().getMaxHP()/4);
+    public void execute(Monster own, Monster enemy){
+        double effectivity = 1;
+        for (ElementType e : enemy.getElementTypes()) {
+            effectivity *= EffectivityPool.getEffectivity(this.elementType, e);
         }
+        if (own.getEffect().equals(StatusCondition.BURN)) {
+            double damage = (basePower * own.getStats().getAttack()/enemy.getStats().getDefense() + 2) * Math.random()*(1-0.85+1)+0.85 * effectivity * 0.125 * enemy.getStats().getMaxHP();
+            enemy.getStats().decreaseHP(damage);
+            own.getStats().decreaseHP(own.getStats().getMaxHP()/4);
+        } else {
+            double damage = (basePower * own.getStats().getAttack()/enemy.getStats().getDefense() + 2) * Math.random()*(1-0.85+1)+0.85 * effectivity;
+            enemy.getStats().decreaseHP(damage);
+            own.getStats().decreaseHP(own.getStats().getMaxHP()/4);
+        }
+        System.out.println("Mengeksekusi Default Move");
     }
 }

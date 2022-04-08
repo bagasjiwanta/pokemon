@@ -3,6 +3,7 @@ import com.monstersaku.Monster;
 import com.monstersaku.enums.ElementType;
 import com.monstersaku.enums.MoveType;
 import com.monstersaku.enums.StatusCondition;
+import com.monstersaku.pools.EffectivityPool;
 
 public class SpecialMove extends Move {
     private int basePower;
@@ -30,15 +31,20 @@ public class SpecialMove extends Move {
     }
 
     @Override
-    public void execute(Monster allyMonster, Monster enemyMonster) {
-        if (allyMonster.getEffect().equals(StatusCondition.BURN)) {
-            double damage = (this.basePower * allyMonster.getStats().getSpecialAttack()/enemyMonster.getStats().getSpecialDefense() + 2) * Math.random()*(1-0.85+1)+0.85 * 1 /** ElementEffectivity */ * 0.5 /** Burn */;
-            enemyMonster.getStats().setHealthPoint(damage);
+    public void execute(Monster own, Monster enemy) {
+        double effectivity = 1;
+        for (ElementType e : enemy.getElementTypes()) {
+            effectivity *= EffectivityPool.getEffectivity(this.elementType, e);
+        }
+        if (own.getEffect().equals(StatusCondition.BURN)) {
+            double damage = (this.basePower * own.getStats().getSpecialAttack()/enemy.getStats().getSpecialDefense() + 2) * Math.random()*(1-0.85+1)+0.85 * effectivity * 0.125 * enemy.getStats().getMaxHP();
+            enemy.getStats().decreaseHP(damage);
             super.reduceAmmunition();
         } else {
-            double damage = (this.basePower * allyMonster.getStats().getSpecialAttack()/enemyMonster.getStats().getSpecialDefense() + 2) * Math.random()*(1-0.85+1)+0.85 * 1 /** ElementEffectivity */ * 1 /** Burn */;
-            enemyMonster.getStats().setHealthPoint(damage);
+            double damage = (this.basePower * own.getStats().getSpecialAttack()/enemy.getStats().getSpecialDefense() + 2) * Math.random()*(1-0.85+1)+0.85 * effectivity;
+            enemy.getStats().decreaseHP(damage);
             super.reduceAmmunition();
         }
+        System.out.println("Mengeksekusi Special Move");
     };
 }

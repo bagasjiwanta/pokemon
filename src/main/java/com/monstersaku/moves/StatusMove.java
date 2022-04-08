@@ -40,12 +40,17 @@ public class StatusMove extends Move {
         return this.target;
     }
 
-    public void execute(Monster allyMonster, Monster enemyMonster) {
+    public void execute(Monster own, Monster enemy) {
+
+        // ini diganti yg setEffect jdi alterEffect
+        // bikin fungsi dulu di monsternya
+        // liat di spesifikasi hal 14 yg awal awal tuh
         if (this.target.equals("ENEMY")) {
-            enemyMonster.setEffect(getCondition());
+            enemy.setEffect(getCondition());
         } else {
-            
+            own.setEffect(getCondition());
         }
         super.reduceAmmunition();
+        System.out.println("Mengeksekusi Normal Move");
     }
 }

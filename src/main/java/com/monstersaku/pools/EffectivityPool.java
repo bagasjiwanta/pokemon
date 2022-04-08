@@ -8,39 +8,25 @@ import com.monstersaku.util.CSVReader;
 
 public class EffectivityPool {
     public static CSVReader reader;
-    private static EffectivityPool INSTANCE = null;
 
-    private HashMap<String, Double> effectList;
-    
-    private EffectivityPool () {
-        this.effectList = new HashMap<String, Double>();
-    }
+    public static HashMap<String, Double> effectList = new HashMap<String, Double>();
 
-    public static void setReader(CSVReader csvreader) {
-        if (reader == null) {
-            EffectivityPool.reader = csvreader;
-        }
-    }
-
-    public static EffectivityPool getEffectivityPool () {
-        if (INSTANCE == null) {
-            INSTANCE = new EffectivityPool();
-        }
-        return INSTANCE;
-    }
-
-    public void addEffectivity(ElementType source, ElementType target, double effectivity) {
+    public static void addEffectivity(ElementType source, ElementType target, double effectivity) {
         String key = source.toString() + "," + target.toString(); 
-        this.effectList.put(key, effectivity);
+        EffectivityPool.effectList.put(key, effectivity);
     } 
 
-    public double getEffectivity(ElementType source, ElementType target) {
+    public static double getEffectivity(ElementType source, ElementType target) {
         String key = source.toString() + "," + target.toString();
-        double effectivity = this.effectList.get(key);
+        double effectivity = EffectivityPool.effectList.get(key);
         return effectivity;
     }
 
-    public void readEffectivities() {
+    public static void setReader(CSVReader csvreader) {
+        EffectivityPool.reader = csvreader;
+    }
+
+    public static void readEffectivities() {
         if (EffectivityPool.reader == null) {
             return;
         }
@@ -54,7 +40,7 @@ public class EffectivityPool {
                     source = ElementType.valueOf(line[0]);
                     target = ElementType.valueOf(line[1]);
                     double effectivity = Double.parseDouble(line[2]);
-                    this.addEffectivity(source, target, effectivity);
+                    EffectivityPool.addEffectivity(source, target, effectivity);
                 } catch (IllegalArgumentException e) {
                     System.out.println("[IllegalArgumentException] " + e.getMessage());
                 } catch (Exception e) {

@@ -34,6 +34,10 @@ public class Stats {
         this.healthPoint = healthPoint;
     }
 
+    public void decreaseHP(double healthPoint) {
+        this.healthPoint -= healthPoint;
+    }
+
     public double getAttack() {
         return this.attack;
     }
