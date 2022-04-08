@@ -8,6 +8,7 @@ import com.monstersaku.pools.EffectivityPool;
 public class StatusMove extends Move {
     private String target;
     private StatusCondition effectCondition;
+
     public StatusMove (
         int id,
         MoveType moveType,
@@ -32,7 +33,20 @@ public class StatusMove extends Move {
         this.effectCondition = effectCondition;
     }
 
-    public void execute(Monster source, Monster target) {
-        EffectivityPool effectivityPool = EffectivityPool.getEffectivityPool();
+    public StatusCondition getCondition() {
+        return this.effectCondition;
+    }
+
+    public String getTarget() {
+        return this.target;
+    }
+
+    public void execute(Monster allyMonster, Monster enemyMonster) {
+        if (this.target.equals("ENEMY")) {
+            enemyMonster.setEffect(getCondition());
+        } else {
+            
+        }
+        super.reduceAmmunition();
     }
 }

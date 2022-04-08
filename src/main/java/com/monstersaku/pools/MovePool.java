@@ -7,11 +7,9 @@ import com.monstersaku.moves.Move;
 
 public class MovePool {
     private List<Move> moves;
-    private boolean hasOwner;
 
-    public MovePool (boolean hasOwner) {
+    public MovePool () {
         moves = new ArrayList<Move>();
-        this.hasOwner = hasOwner;
     }
 
     public void add (Move move) {

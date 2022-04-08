@@ -69,5 +69,9 @@ public abstract class Move {
         this.ammunition = ammunition;
     }
 
+    public void reduceAmmunition() {
+        this.ammunition --;
+    }
+
     public abstract void execute (Monster source, Monster target);
 }

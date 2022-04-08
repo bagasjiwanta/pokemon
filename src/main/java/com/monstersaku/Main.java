@@ -1,18 +1,21 @@
 package com.monstersaku;
 
-import com.monstersaku.enums.ElementType;
-import com.monstersaku.moves.DefaultMove;
-import com.monstersaku.moves.Move;
+// import com.monstersaku.enums.ElementType;
+// import com.monstersaku.enums.MoveType;
+// import com.monstersaku.enums.StatusCondition;
+// import com.monstersaku.moves.DefaultMove;
+// import com.monstersaku.moves.Move;
+// import com.monstersaku.moves.NormalMove;
+// import com.monstersaku.moves.SpecialMove;
+// import com.monstersaku.moves.StatusMove;
 import com.monstersaku.pools.EffectivityPool;
 import com.monstersaku.pools.MonsterPool;
-import com.monstersaku.pools.MovePool;
 import com.monstersaku.util.CSVReader;
 
 import java.io.File;
 import java.util.Arrays;
 import java.util.List;
 import java.util.ArrayList;
-import java.util.InputMismatchException;
 
 public class Main {
 
@@ -23,99 +26,18 @@ public class Main {
     public static void main(String[] args) {
         EffectivityPool effectivityPool = EffectivityPool.getEffectivityPool();
         MonsterPool monsterPool = new MonsterPool(false);
-        MovePool movePool = new MovePool(false);
         List<CSVReader> readers = new ArrayList<CSVReader>();
-        CSVReader currentReader;
 
         for (String fileName : CSV_FILE_PATHS) {
             try {
                 readers.add(new CSVReader(new File(Main.class.getResource(fileName).toURI()), ";"));
-                // readers.add(new CSVReader(new File(Main.class.getResource(fileName).toURI()), ";"));
-            } catch (Exception e) {
-                // do nothing
-            }
+            } catch (Exception e) { }
         }
+        MonsterPool.setReader(readers.get(0));
+        Monster.setReader(readers.get(1));
+        EffectivityPool.setReader(readers.get(2));
 
-        // read element type effectivity chart
-        currentReader = readers.get(2);
-        currentReader.setSkipHeader(true);
-        try {
-            List<String[]> lines = currentReader.read();
-            for (String[] line : lines) {
-                ElementType source, target;
-                try {
-                    source = ElementType.valueOf(line[0]);
-                    target = ElementType.valueOf(line[1]);
-                    double effectivity = Double.parseDouble(line[2]);
-                    effectivityPool.add(source, target, effectivity);
-                } catch (IllegalArgumentException e) {
-                    System.out.println("[IllegalArgumentException] " + e.getMessage());
-                } catch (Exception e) {
-                    System.out.println("[Exception] " + e.getMessage());
-                }
-            }
-        } catch (Exception e) { }
-        System.out.println(effectivityPool.getEffectivity(ElementType.FIRE, ElementType.WATER));
-        System.out.println(effectivityPool.getEffectivity(ElementType.WATER, ElementType.FIRE));
-
-        // read move pool
-        currentReader = readers.get(1);
-        currentReader.setSkipHeader(true);
-        try {
-            List<String[]> lines = currentReader.read();
-            for (String[] line : lines) {
-                Move move;
-                
-                if (line[1].equals("STATUS")) {
-
-                } else {
-                    
-                }
-            }
-        } 
-
-        // read monster pool
-        currentReader = readers.get(0);
-        currentReader.setSkipHeader(true);
-        try {
-            List<String[]> lines = currentReader.read();
-            for (String[] line : lines) {
-                try {
-                    // read monster's element type
-                    List<ElementType> elementTypes = new ArrayList<ElementType>();
-                    for (String eltype : line[2].split(",")) {
-                        try {
-                            elementTypes.add(ElementType.valueOf(eltype));
-                        } catch (Exception e) {
-                            System.out.println(e.getMessage());
-                            break;
-                        }
-                    }
-                    // read monster's stats
-                    List<Double> statsList = new ArrayList<Double>();
-                    for (String stat : line[3].split(",")) {
-                        try {
-                            statsList.add(Double.parseDouble(stat));
-                        } catch (Exception e) {
-                            System.out.println(e.getMessage());
-                            break;
-                        }
-                    }
-                    Stats stats;
-                    try {
-                        // add monster to global monster pool
-                        stats = new Stats(statsList);
-                        Monster monster = new Monster(line[1], elementTypes, statsList, null);
-                        monsterPool.add(monster);
-                    } catch (IllegalArgumentException e) {
-                        System.out.println(e.getMessage());
-                    }
-
-
-                } catch (Exception e) {
-                    System.out.println(e.getMessage());
-                }
-            }
-        } catch (Exception e) { }
+        effectivityPool.readEffectivities();
+        monsterPool.readSixRandomMonster();
     }
 }
