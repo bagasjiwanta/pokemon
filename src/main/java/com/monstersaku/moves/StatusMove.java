@@ -3,7 +3,6 @@ import com.monstersaku.Monster;
 import com.monstersaku.enums.ElementType;
 import com.monstersaku.enums.MoveType;
 import com.monstersaku.enums.StatusCondition;
-import com.monstersaku.pools.EffectivityPool;
 
 public class StatusMove extends Move {
     private String target;
