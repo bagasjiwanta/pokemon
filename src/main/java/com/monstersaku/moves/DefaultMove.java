@@ -13,6 +13,11 @@ public class DefaultMove extends Move {
     }
 
     public void execute(Monster own, Monster enemy){
+        if (doesItMiss()) {
+            super.reduceAmmunition();
+            System.out.println("Default Move miss");
+            return;
+        }
         double effectivity = 1;
         for (ElementType e : enemy.getElementTypes()) {
             effectivity *= EffectivityPool.getEffectivity(this.elementType, e);

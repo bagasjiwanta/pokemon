@@ -31,6 +31,11 @@ public class NormalMove extends Move{
     }
 
     public void execute(Monster own, Monster enemy) {
+        if (doesItMiss()) {
+            super.reduceAmmunition();
+            System.out.println("Normal move miss");
+            return;
+        }
         double effectivity = 1;
         for (ElementType e : enemy.getElementTypes()) {
             effectivity *= EffectivityPool.getEffectivity(this.elementType, e);
@@ -38,12 +43,11 @@ public class NormalMove extends Move{
         if (own.getEffect().equals(StatusCondition.BURN)) {
             double damage = (this.basePower * own.getStats().getAttack()/enemy.getStats().getDefense() + 2) * Math.random()*(1-0.85+1)+0.85 * effectivity * 0.125 * enemy.getStats().getMaxHP();
             enemy.getStats().decreaseHP(damage);
-            super.reduceAmmunition();
         } else {
             double damage = (this.basePower * own.getStats().getAttack()/enemy.getStats().getDefense() + 2) * Math.random()*(1-0.85+1)+0.85 * effectivity;
             enemy.getStats().decreaseHP(damage);
-            super.reduceAmmunition();
             System.out.println("Mengeksekusi Normal Move, damage : " + damage);
         }
+        super.reduceAmmunition();
     }
 }

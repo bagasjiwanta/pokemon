@@ -45,6 +45,11 @@ public class StatusMove extends Move {
     }
 
     public void execute(Monster own, Monster enemy) {
+        if (doesItMiss()) {
+            super.reduceAmmunition();
+            System.out.println("Status Move miss");
+            return;
+        }
         if (this.target.equals("ENEMY")) {
             enemy.setCondition(getCondition());
             enemy.alterStats(this.stats);

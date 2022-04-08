@@ -32,6 +32,11 @@ public class SpecialMove extends Move {
 
     @Override
     public void execute(Monster own, Monster enemy) {
+        if (doesItMiss()) {
+            super.reduceAmmunition();
+            System.out.println("Special Move miss");
+            return;
+        }
         double effectivity = 1;
         for (ElementType e : enemy.getElementTypes()) {
             effectivity *= EffectivityPool.getEffectivity(this.elementType, e);

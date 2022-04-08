@@ -1,5 +1,7 @@
 package com.monstersaku.moves;
 
+import java.util.Random;
+
 import com.monstersaku.Monster;
 import com.monstersaku.enums.ElementType;
 import com.monstersaku.enums.MoveType;
@@ -71,6 +73,12 @@ public abstract class Move {
 
     public void reduceAmmunition() {
         this.ammunition --;
+    }
+
+    public boolean doesItMiss () {
+        Random random = new Random (this.id);
+        int rand = random.nextInt(this.ammunition + 1);
+        return rand >= this.ammunition;
     }
 
     public abstract void execute (Monster source, Monster target);
