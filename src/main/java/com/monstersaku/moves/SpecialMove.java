@@ -32,11 +32,22 @@ public class SpecialMove extends Move {
 
     @Override
     public void execute(Monster own, Monster enemy) {
+        super.reduceAmmunition();
         if (doesItMiss()) {
-            super.reduceAmmunition();
             System.out.println("Special Move miss");
             return;
         }
+
+        if (own.isParalyzed()) {
+            System.out.println("Special Move failed due to pokemon being paralyzed");
+            return;
+        }
+
+        if (own.isSleeping()) {
+            System.out.println("Special Move failed due to pokemon being sleeping");
+            return;
+        }
+
         double effectivity = 1;
         for (ElementType e : enemy.getElementTypes()) {
             effectivity *= EffectivityPool.getEffectivity(this.elementType, e);
@@ -44,11 +55,9 @@ public class SpecialMove extends Move {
         if (own.getEffect().equals(StatusCondition.BURN)) {
             double damage = (this.basePower * own.getStats().getSpecialAttack()/enemy.getStats().getSpecialDefense() + 2) * Math.random()*(1-0.85+1)+0.85 * effectivity * 0.125 * enemy.getStats().getMaxHP();
             enemy.getStats().decreaseHP(damage);
-            super.reduceAmmunition();
         } else {
             double damage = (this.basePower * own.getStats().getSpecialAttack()/enemy.getStats().getSpecialDefense() + 2) * Math.random()*(1-0.85+1)+0.85 * effectivity;
             enemy.getStats().decreaseHP(damage);
-            super.reduceAmmunition();
             System.out.println("Mengeksekusi Special Move, damage : " + damage);
         }
     };

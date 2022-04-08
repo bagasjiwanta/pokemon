@@ -45,19 +45,30 @@ public class StatusMove extends Move {
     }
 
     public void execute(Monster own, Monster enemy) {
+        super.reduceAmmunition();
         if (doesItMiss()) {
-            super.reduceAmmunition();
             System.out.println("Status Move miss");
             return;
         }
+
+        if (own.isParalyzed()) {
+            System.out.println("Status Move failed due to pokemon being paralyzed");
+            return;
+        }
+
+        if (own.isSleeping()) {
+            System.out.println("Status Move failed due to pokemon being sleeping");
+            return;
+        }
+
         if (this.target.equals("ENEMY")) {
-            enemy.setCondition(getCondition());
+            if (enemy.getEffect() == StatusCondition.NONE) {
+                enemy.setCondition(getCondition());
+            }
             enemy.alterStats(this.stats);
         } else {
-            own.setCondition(getCondition());
             own.alterStats(this.stats);
         }
-        super.reduceAmmunition();
-        System.out.println("Mengeksekusi statusmove Move");
+        System.out.println("Mengeksekusi Status Move");
     }
 }

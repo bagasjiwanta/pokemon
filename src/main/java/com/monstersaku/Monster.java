@@ -2,6 +2,7 @@ package com.monstersaku;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import com.monstersaku.enums.ElementType;
 import com.monstersaku.enums.MoveType;
@@ -22,6 +23,7 @@ public class Monster {
     private MovePool movePool;
     private List<Integer> moveIds;
     public static CSVReader reader;
+    private int sleepCounter;
 
     public Monster (
         String nama,
@@ -35,6 +37,7 @@ public class Monster {
         this.statusCondition = StatusCondition.NONE;
         this.moveIds = moveIds;
         this.movePool = new MovePool();
+        this.sleepCounter = 0;
     }
 
     public String getNama() {
@@ -102,6 +105,15 @@ public class Monster {
         } else if (this.statusCondition == StatusCondition.POISON){
             // do that
         }
+    }
+
+    public boolean isSleeping() {
+        return sleepCounter > 0 && this.statusCondition == StatusCondition.SLEEP;
+    }
+
+    public boolean isParalyzed() {
+        Random random = new Random(this.hashCode());
+        return random.nextInt(4) == 1 && this.statusCondition == StatusCondition.PARALYZE;
     }
 
     public void readMoves () {
