@@ -52,9 +52,20 @@ public class Game {
         }
     }
 
+    public void calcAfter () {
+        for (Monster monster : currMonsters().getMonsters()) {
+            monster.afterEffect();
+        }
+        for (Monster monster : enemyMonsters().getMonsters()) {
+            monster.afterEffect();
+        }
+    }
+
     public void loop () {
         while (true) {
             turn();
+            turn();
+            calcAfter();
             checkForWinner();
         }
     }
@@ -78,14 +89,15 @@ public class Game {
             
         } else {
             currMonsters().printMonsters(currPName());
-
-            // minta input mau switch ke pokemon brp trus switch
+            System.out.println("Pilih pokemon untuk di switch");
+            System.out.print("\n> ");
+            choice = Main.scanner.nextInt();
+            currMonsters().switchPokemon(choice);
         }
-
-        toggleCurrentPlayer();
+        changePlayer();
     }
 
-    public void toggleCurrentPlayer () {
+    public void changePlayer () {
         if (this.whoseTurn == 0) {
             this.whoseTurn ++;
         } else {

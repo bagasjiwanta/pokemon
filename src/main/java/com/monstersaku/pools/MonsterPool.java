@@ -39,6 +39,10 @@ public class MonsterPool {
         }
     }
 
+    public List<Monster> getMonsters() {
+        return this.monsterList;
+    }
+
     public void add (Monster monster) {
         if (this.monsterList.size() >= 6) {
             return;
