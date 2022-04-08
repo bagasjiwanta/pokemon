@@ -56,7 +56,7 @@ public class CSVReader {
         boolean firstLine = true;
         FileReader fileReader = new FileReader(this.csvFile);
         BufferedReader br = new BufferedReader(fileReader);
-        ArrayList<String[]> list = new ArrayList<String[]>();
+        List<String[]> list = new ArrayList<String[]>();
 
         while ((line = br.readLine()) != null) {
             if (!firstLine || !this.skipFirstLine) {
