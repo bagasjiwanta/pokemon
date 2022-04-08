@@ -25,7 +25,7 @@ public class DefaultMove extends Move {
             double damage = (basePower * own.getStats().getAttack()/enemy.getStats().getDefense() + 2) * Math.random()*(1-0.85+1)+0.85 * effectivity;
             enemy.getStats().decreaseHP(damage);
             own.getStats().decreaseHP(own.getStats().getMaxHP()/4);
+            System.out.println("Mengeksekusi Default Move, damage : " + damage);
         }
-        System.out.println("Mengeksekusi Default Move");
     }
 }

@@ -32,6 +32,7 @@ public class MonsterPool {
     }
 
     public void printMonsters (String pname) {
+        // klo ad yg mati di print
         System.out.println("\nMonster yang dimiliki : " + pname);
         for (int i = 0;i < 6;i++) {
             System.out.println(i + ". " + monsterList.get(i).getNama());
@@ -122,5 +123,13 @@ public class MonsterPool {
         for (Monster monster : this.monsterList) {
             monster.readMoves();
         }
+    }
+
+    public int howManyAliveMonsters () {
+        return 6;
+    }
+
+    public void switchPokemon (int index) {
+        this.currentMonster = index - 1;
     }
 }

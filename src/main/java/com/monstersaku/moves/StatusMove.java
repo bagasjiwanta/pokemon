@@ -1,5 +1,6 @@
 package com.monstersaku.moves;
 import com.monstersaku.Monster;
+import com.monstersaku.Stats;
 import com.monstersaku.enums.ElementType;
 import com.monstersaku.enums.MoveType;
 import com.monstersaku.enums.StatusCondition;
@@ -7,6 +8,7 @@ import com.monstersaku.enums.StatusCondition;
 public class StatusMove extends Move {
     private String target;
     private StatusCondition effectCondition;
+    private Stats stats;
 
     public StatusMove (
         int id,
@@ -17,7 +19,8 @@ public class StatusMove extends Move {
         int priority,
         int ammunition,
         String target,
-        StatusCondition effectCondition
+        StatusCondition effectCondition,
+        Stats stats
     ) {
         super (
             id,
@@ -30,6 +33,7 @@ public class StatusMove extends Move {
         );
         this.target = target;
         this.effectCondition = effectCondition;
+        this.stats = stats;
     }
 
     public StatusCondition getCondition() {
@@ -41,16 +45,14 @@ public class StatusMove extends Move {
     }
 
     public void execute(Monster own, Monster enemy) {
-
-        // ini diganti yg setEffect jdi alterEffect
-        // bikin fungsi dulu di monsternya
-        // liat di spesifikasi hal 14 yg awal awal tuh
         if (this.target.equals("ENEMY")) {
-            enemy.setEffect(getCondition());
+            enemy.setCondition(getCondition());
+            enemy.alterStats(this.stats);
         } else {
-            own.setEffect(getCondition());
+            own.setCondition(getCondition());
+            own.alterStats(this.stats);
         }
         super.reduceAmmunition();
-        System.out.println("Mengeksekusi Normal Move");
+        System.out.println("Mengeksekusi statusmove Move");
     }
 }

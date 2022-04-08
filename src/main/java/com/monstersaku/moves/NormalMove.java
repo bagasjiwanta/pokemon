@@ -39,7 +39,6 @@ public class NormalMove extends Move{
             double damage = (this.basePower * own.getStats().getAttack()/enemy.getStats().getDefense() + 2) * Math.random()*(1-0.85+1)+0.85 * effectivity * 0.125 * enemy.getStats().getMaxHP();
             enemy.getStats().decreaseHP(damage);
             super.reduceAmmunition();
-            System.out.println("Mengeksekusi Normal Move, damage : " + damage);
         } else {
             double damage = (this.basePower * own.getStats().getAttack()/enemy.getStats().getDefense() + 2) * Math.random()*(1-0.85+1)+0.85 * effectivity;
             enemy.getStats().decreaseHP(damage);

@@ -73,12 +73,13 @@ public class Game {
             .execute(
                 currMonsters().currMonster(),
                 enemyMonsters().currMonster()
-                );
+            );
             System.out.println(enemyMonsters().currMonster().getStats().getHealthPoint());
             
         } else {
             currMonsters().printMonsters(currPName());
-            // ganti pokemon disini
+
+            // minta input mau switch ke pokemon brp trus switch
         }
 
         toggleCurrentPlayer();

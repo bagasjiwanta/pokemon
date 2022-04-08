@@ -1,5 +1,6 @@
 package com.monstersaku;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.monstersaku.enums.ElementType;
@@ -60,8 +61,13 @@ public class Monster {
         return this.statusCondition;
     }
 
-    public void setEffect(StatusCondition effect) {
+    public void setCondition(StatusCondition effect) {
         this.statusCondition = effect;
+    }
+
+    public void alterStats(Stats alterStats) {
+        this.baseStats.setAttack(this.baseStats.getAttack() - alterStats.getAttack());
+        // bikin lagi dibawah
     }
 
     public Move getMoveById(int id) {
@@ -79,6 +85,22 @@ public class Monster {
     public static void setReader (CSVReader csvreader) {
         if (Monster.reader == null) {
             Monster.reader = csvreader;
+        }
+    }
+
+    public void beforeEffect () {
+        if (this.statusCondition == StatusCondition.SLEEP) {
+            // do this
+        } else if (this.statusCondition == StatusCondition.PARALYZE) {
+            // do that
+        }
+    }
+
+    public void afterEffect () {
+        if (this.statusCondition == StatusCondition.BURN) {
+            // do this
+        } else if (this.statusCondition == StatusCondition.POISON){
+            // do that
         }
     }
 
@@ -118,7 +140,18 @@ public class Monster {
                     } else {
                         statusCondition = StatusCondition.valueOf(line[8]);
                     }
-                    move = new StatusMove(id, moveType, name, elementType, accuracy, priority, ammunition, target, statusCondition);
+                    List<Double> statsList = new ArrayList<Double>();
+                    for (String stat : line[9].split(",")) {
+                        try {
+                            statsList.add(Double.parseDouble(stat));
+                        } catch (Exception e) {
+                            System.out.println(e.getMessage());
+                            break;
+                        }
+                    }
+                    Stats stats;
+                    stats = new Stats(statsList);
+                    move = new StatusMove(id, moveType, name, elementType, accuracy, priority, ammunition, target, statusCondition, stats);
                 }
 
                 this.movePool.add(move);
