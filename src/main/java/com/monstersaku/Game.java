@@ -74,10 +74,12 @@ public class Game {
         System.out.println("Pilih gerakan");
         System.out.println("1. Move");
         System.out.println("2. Switch");
+        System.out.print("> ");
         int choice = Main.scanner.nextInt();
 
         if (choice == 1) {
             currMonsters().currMonster().displayMoves();
+            System.out.print("> ");
             choice = Main.scanner.nextInt();
             System.out.println(enemyMonsters().currMonster().getStats().getHealthPoint());
             currMonsters().currMonster().getMoveById(choice)
@@ -90,7 +92,7 @@ public class Game {
         } else {
             currMonsters().printMonsters(currPName());
             System.out.println("Pilih pokemon untuk di switch");
-            System.out.print("\n> ");
+            System.out.print("> ");
             choice = Main.scanner.nextInt();
             currMonsters().switchPokemon(choice);
         }
