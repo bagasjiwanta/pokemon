@@ -57,7 +57,11 @@ public class Main {
             int operasi = Main.scanner.nextInt();
         switch (operasi) {
             case 1:
-            Game game = new Game("john", "doe");
+            System.out.print("Masukkan nama untuk player 1\n> ");
+            String pname1 = Main.scanner.next();
+            System.out.print("Masukkan nama untuk player 2\n> ");
+            String pname2 = Main.scanner.next();
+            Game game = new Game(pname1, pname2);
             game.start();
             game.loop();
               break;

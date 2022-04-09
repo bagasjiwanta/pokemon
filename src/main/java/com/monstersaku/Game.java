@@ -43,6 +43,7 @@ public class Game {
     public void start () {
         monsterPools.get(0).readSixRandomMonster();
         monsterPools.get(1).readSixRandomMonster();
+        System.out.println("Selamat datang " + this.playerNames.get(0) + " dan " + this.playerNames.get(1));
     }
 
     public void checkForWinner () {
@@ -53,50 +54,61 @@ public class Game {
     }
 
     public void calcAfter () {
-        for (Monster monster : currMonsters().getMonsters()) {
-            monster.afterEffect();
-        }
         for (Monster monster : enemyMonsters().getMonsters()) {
             monster.afterEffect();
         }
     }
 
+    public void calcBefore () {
+        for (Monster monster : currMonsters().getMonsters()) {
+            monster.beforeEffect();
+        }
+    }
+
     public void loop () {
         while (true) {
-            turn();
+            calcBefore();
             turn();
             calcAfter();
             checkForWinner();
+            changePlayer();
         }
     }
 
     public void turn () {
-        System.out.println("Pilih gerakan");
-        System.out.println("1. Move");
-        System.out.println("2. Switch");
+        System.out.println("Pilih gerakanmu, " + this.currPName());
+        System.out.println("[1] Move, [2] Switch, [3] View Monsters Info, [4] View Game Info");
         System.out.print("> ");
-        int choice = Main.scanner.nextInt();
-
-        if (choice == 1) {
-            currMonsters().currMonster().displayMoves();
-            System.out.print("> ");
-            choice = Main.scanner.nextInt();
-            System.out.println(enemyMonsters().currMonster().getStats().getHealthPoint());
-            currMonsters().currMonster().getMoveById(choice)
-            .execute(
-                currMonsters().currMonster(),
-                enemyMonsters().currMonster()
-            );
-            System.out.println(enemyMonsters().currMonster().getStats().getHealthPoint());
-            
-        } else {
-            currMonsters().printMonsters(currPName());
-            System.out.println("Pilih pokemon untuk di switch");
-            System.out.print("> ");
-            choice = Main.scanner.nextInt();
-            currMonsters().switchPokemon(choice);
+        String choice = Main.scanner.next();
+        int input;
+        switch (choice) {
+            case "1" :
+                currMonsters().currMonster().displayMoves();
+                System.out.print("Pilih move yang akan dieksekusi\n> ");
+                input = Main.scanner.nextInt();
+                currMonsters().currMonster().getMoveById(input)
+                .execute(
+                    currMonsters().currMonster(),
+                    enemyMonsters().currMonster()
+                );
+                break;
+            case "2" : 
+                currMonsters().printMonsters(currPName());
+                System.out.println("Pilih pokemon untuk di switch");
+                System.out.print("> ");
+                input = Main.scanner.nextInt();
+                currMonsters().switchPokemon(input);
+                break;
+            case "3" : 
+                viewMonstersInfo();
+                break;
+            case "4" :
+                viewGameInfo();
+                break;
+            default:
+                System.out.println("Input tidak valid");
+                return;
         }
-        changePlayer();
     }
 
     public void changePlayer () {
@@ -111,4 +123,19 @@ public class Game {
     public static void getHelp() {
         System.out.println("HELP");
     }   
+
+    public void viewMonstersInfo () {
+        //
+    }
+
+    public void viewGameInfo() { 
+        System.out.println("Game Info : ");
+        System.out.println(" Giliran : " + this.currPName());
+        System.out.println(" Monster yang sedang bertarung : ");
+        System.out.println("  Monster yang dimiliki " + this.playerNames.get(0));
+        this.monsterPools.get(0).displayMonsters();
+        System.out.println("  Monster yang dimiliki " + this.playerNames.get(1));
+        this.monsterPools.get(1).displayMonsters();
+        System.out.println();
+    }
 }

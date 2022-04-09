@@ -3,7 +3,6 @@ import java.util.Random;
 import com.monstersaku.Monster;
 import com.monstersaku.enums.ElementType;
 import com.monstersaku.enums.MoveType;
-import com.monstersaku.enums.StatusCondition;
 import com.monstersaku.pools.EffectivityPool;
 
 public class DefaultMove extends Move {

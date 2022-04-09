@@ -18,7 +18,7 @@ public class MonsterPool {
     // generate list of 6 random numbers
     private List<Integer> randSixInt(int max) {
         Random random = new Random(randSeed);
-        MonsterPool.randSeed ++;
+        MonsterPool.randSeed += 200;
         List<Integer> randomIntegers = new ArrayList<Integer>();
         for (int i = 0; i < 6; i++) {
             randomIntegers.add(random.nextInt(max + 1));
@@ -135,5 +135,27 @@ public class MonsterPool {
 
     public void switchPokemon (int index) {
         this.currentMonster = index - 1;
+    }
+
+    public void displayMonsters () {
+        if (this.currMonster().isMonsterAlive()) {
+            System.out.println("   Monster di field : " + this.currMonster().getNama() + " " + 
+            this.currMonster().getStats().getHealthPoint() + "/" + this.currMonster().getStats().getMaxHP());
+        } else {
+            System.out.println("   Monster di field : " + this.currMonster().getNama() + " FAINTED");
+        }
+        System.out.println("   Monster di bag :");
+
+        for (int i = 0; i < 6; i++) {
+            String addition = "";
+            if (!this.monsterList.get(i).isMonsterAlive()) {
+                addition = "FAINTED";
+            } else {
+                addition = this.monsterList.get(i).getStats().getHealthPoint() + "/" + this.monsterList.get(i).getStats().getMaxHP();
+            }
+            if (i != currentMonster) {
+                System.out.println("    - " + this.monsterList.get(i).getNama() + " " + addition);
+            }
+        }
     }
 }

@@ -3,7 +3,6 @@ import java.util.Random;
 import com.monstersaku.Monster;
 import com.monstersaku.enums.ElementType;
 import com.monstersaku.enums.MoveType;
-import com.monstersaku.enums.StatusCondition;
 import com.monstersaku.pools.EffectivityPool;
 
 public class SpecialMove extends Move {
@@ -59,7 +58,6 @@ public class SpecialMove extends Move {
             Random random = new Random();
             double damage = (this.basePower * own.getStats().getSpecialAttack()/enemy.getStats().getSpecialDefense() + 2) * ((random.nextInt(101 - 85) + 85) * 0.01) * effectivity * own.burnMultiplier();
             enemy.getStats().decreaseHP(damage);
-            System.out.println("Mengeksekusi Special Move, damage : " + damage);
 
         } else {
             System.out.println("Move out of ammunition");

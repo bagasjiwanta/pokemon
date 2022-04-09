@@ -81,9 +81,9 @@ public class Monster {
     }
 
     public void displayMoves() {
-        System.out.println("Pokemon " + this.nama + " memiliki move-move berikut: ");
+        System.out.println(this.nama + " memiliki move-move berikut: ");
         for (int x = 0; x < movePool.getNumberOfMoves(); x++) {
-            System.out.println((x+1) + ". nama : " + movePool.getMoveByIndex(x).getName() + 
+            System.out.println("[" + (x+1) + "] nama : " + movePool.getMoveByIndex(x).getName() + 
             ", amunisi : " + movePool.getMoveByIndex(x).getAmmunition());
         }
     }
@@ -96,11 +96,17 @@ public class Monster {
 
     public void beforeEffect () {
         if (this.statusCondition == StatusCondition.SLEEP) {
+            if (this.sleepCounter > 0) {
+                return;
+            }
             Random random = new Random();
             this.sleepCounter = random.nextInt(8 - 1) + 1;
         } else if (this.statusCondition == StatusCondition.PARALYZE) {
+            if (this.getStats().getSpeed() < this.getStats().getMaxSpeed()) {
+                return;
+            }
             this.getStats().setSpeed(this.getStats().getMaxSpeed() * 0.5);
-        }
+        } 
     }
 
     public void afterEffect () {
@@ -109,11 +115,10 @@ public class Monster {
         } else if (this.statusCondition == StatusCondition.POISON){
             this.getStats().decreaseHP(this.getStats().getMaxHP() * 0.0625);
         } else if (this.statusCondition == StatusCondition.SLEEP) {
-            if (sleepCounter == 0) {
+            if (sleepCounter == 1) {
                 this.setCondition(StatusCondition.NONE);
-            } else {
-                sleepCounter--;
             }
+            sleepCounter--;
         }
     }
 
@@ -190,11 +195,7 @@ public class Monster {
     }
 
     public boolean isMonsterAlive(){
-        if (this.baseStats.getHealthPoint() != 0){
-            return true;
-        } else{
-            return false;
-        }
+        return (this.baseStats.getHealthPoint() != 0);
     }
 
     public void printMonsterAttributes() {
