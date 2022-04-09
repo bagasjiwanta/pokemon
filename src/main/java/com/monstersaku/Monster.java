@@ -181,4 +181,27 @@ public class Monster {
             System.out.println(e.getMessage());
         }
     }
+
+    public boolean isMonsterAlive(){
+        if (this.baseStats.getHealthPoint() != 0){
+            return true;
+        } else{
+            return false;
+        }
+    }
+
+    public void printMonsterAttributes() {
+        System.out.println(this.nama);
+        System.out.printf("Element: ");
+        for (ElementType element : this.elementTypes){
+            System.out.print(element.toString() + " ");
+        }
+        System.out.println("");
+        System.out.println("HP: " + this.baseStats.getHealthPoint());
+        System.out.println("Attack: " + this.baseStats.getAttack());
+        System.out.println("Defense: " + this.baseStats.getDefense());
+        System.out.println("Special Attack: " + this.baseStats.getSpecialAttack());
+        System.out.println("Special Defense: " + this.baseStats.getSpecialDefense());
+        System.out.println("Speed: " + this.baseStats.getSpeed());
+    }
 }
