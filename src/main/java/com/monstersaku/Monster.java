@@ -70,7 +70,10 @@ public class Monster {
 
     public void alterStats(Stats alterStats) {
         this.baseStats.setAttack(this.baseStats.getAttack() - alterStats.getAttack());
-        // bikin lagi dibawah
+        this.baseStats.setDefense(this.baseStats.getDefense() - alterStats.getDefense());
+        this.baseStats.setSpecialAttack(this.baseStats.getSpecialAttack() - alterStats.getSpecialAttack());
+        this.baseStats.setSpecialDefense(this.baseStats.getSpecialDefense() - alterStats.getSpecialDefense());
+        this.baseStats.setSpeed(this.baseStats.getSpeed() - alterStats.getSpeed());
     }
 
     public Move getMoveById(int id) {
