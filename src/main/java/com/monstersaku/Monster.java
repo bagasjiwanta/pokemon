@@ -104,10 +104,16 @@ public class Monster {
 
     public void afterEffect () {
         if (this.statusCondition == StatusCondition.BURN) {
-            // do this
+            this.getStats().decreaseHP(this.getStats().getMaxHP() * 0.125);
         } else if (this.statusCondition == StatusCondition.POISON){
-            // do that
+            this.getStats().decreaseHP(this.getStats().getMaxHP() * 0.0625);
         }
+    }
+
+    public double burnMultiplier(){
+        if (this.statusCondition == StatusCondition.BURN) {
+            return 0.5;
+        } else return 1;
     }
 
     public boolean isSleeping() {

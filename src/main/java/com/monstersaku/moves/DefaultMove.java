@@ -1,4 +1,5 @@
 package com.monstersaku.moves;
+import java.util.Random;
 import com.monstersaku.Monster;
 import com.monstersaku.enums.ElementType;
 import com.monstersaku.enums.MoveType;
@@ -13,7 +14,7 @@ public class DefaultMove extends Move {
     }
 
     public void execute(Monster own, Monster enemy){
-        super.reduceAmmunition();
+        // Unlimited ammunition
         if (doesItMiss()) {
             System.out.println("Default Move miss");
             return;
@@ -33,15 +34,11 @@ public class DefaultMove extends Move {
         for (ElementType e : enemy.getElementTypes()) {
             effectivity *= EffectivityPool.getEffectivity(this.elementType, e);
         }
-        if (own.getEffect().equals(StatusCondition.BURN)) {
-            double damage = (basePower * own.getStats().getAttack()/enemy.getStats().getDefense() + 2) * Math.random()*(1-0.85+1)+0.85 * effectivity * 0.125 * enemy.getStats().getMaxHP();
-            enemy.getStats().decreaseHP(damage);
-            own.getStats().decreaseHP(own.getStats().getMaxHP()/4);
-        } else {
-            double damage = (basePower * own.getStats().getAttack()/enemy.getStats().getDefense() + 2) * Math.random()*(1-0.85+1)+0.85 * effectivity;
-            enemy.getStats().decreaseHP(damage);
-            own.getStats().decreaseHP(own.getStats().getMaxHP()/4);
-            System.out.println("Mengeksekusi Default Move, damage : " + damage);
-        }
+
+        /** EXECUTE */
+        Random random = new Random();
+        double damage = (basePower * own.getStats().getAttack()/enemy.getStats().getDefense() + 2) * ((random.nextInt(100 - 85) + 85) * 0.01) * effectivity * own.burnMultiplier();
+        enemy.getStats().decreaseHP(damage);
+        System.out.println("Mengeksekusi Default Move, damage : " + damage);
     }
 }

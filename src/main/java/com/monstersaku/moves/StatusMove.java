@@ -45,30 +45,34 @@ public class StatusMove extends Move {
     }
 
     public void execute(Monster own, Monster enemy) {
-        super.reduceAmmunition();
-        if (doesItMiss()) {
-            System.out.println("Status Move miss");
-            return;
-        }
-
-        if (own.isParalyzed()) {
-            System.out.println("Status Move failed due to pokemon being paralyzed");
-            return;
-        }
-
-        if (own.isSleeping()) {
-            System.out.println("Status Move failed due to pokemon being sleeping");
-            return;
-        }
-
-        if (this.target.equals("ENEMY")) {
-            if (enemy.getEffect() == StatusCondition.NONE) {
-                enemy.setCondition(getCondition());
+        if (ammunition > 0) {
+            super.reduceAmmunition();
+            if (doesItMiss()) {
+                System.out.println("Status Move miss");
+                return;
             }
-            enemy.alterStats(this.stats);
+    
+            if (own.isParalyzed()) {
+                System.out.println("Status Move failed due to pokemon being paralyzed");
+                return;
+            }
+    
+            if (own.isSleeping()) {
+                System.out.println("Status Move failed due to pokemon being sleeping");
+                return;
+            }
+    
+            if (this.target.equals("ENEMY")) {
+                if (enemy.getEffect() == StatusCondition.NONE) {
+                    enemy.setCondition(getCondition());
+                }
+                enemy.alterStats(this.stats);
+            } else {
+                own.alterStats(this.stats);
+            }
+            System.out.println("Mengeksekusi Status Move");
         } else {
-            own.alterStats(this.stats);
+            System.out.println("Move out of ammunition");
         }
-        System.out.println("Mengeksekusi Status Move");
     }
 }

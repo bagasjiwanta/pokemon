@@ -1,4 +1,5 @@
 package com.monstersaku.moves;
+import java.util.Random;
 import com.monstersaku.Monster;
 import com.monstersaku.enums.ElementType;
 import com.monstersaku.enums.MoveType;
@@ -31,33 +32,36 @@ public class NormalMove extends Move{
     }
 
     public void execute(Monster own, Monster enemy) {
-        super.reduceAmmunition();
-        if (doesItMiss()) {
-            System.out.println("Normal move miss");
-            return;
-        }
+        if (ammunition > 0) {
+            super.reduceAmmunition();
+            if (doesItMiss()) {
+                System.out.println("Normal move miss");
+                return;
+            }
+    
+            if (own.isParalyzed()) {
+                System.out.println("Normal Move failed due to pokemon being paralyzed");
+                return;
+            }
+    
+            if (own.isSleeping()) {
+                System.out.println("Normal Move failed due to pokemon being sleeping");
+                return;
+            }
+    
+            double effectivity = 1;
+            for (ElementType e : enemy.getElementTypes()) {
+                effectivity *= EffectivityPool.getEffectivity(this.elementType, e);
+            }
 
-        if (own.isParalyzed()) {
-            System.out.println("Normal Move failed due to pokemon being paralyzed");
-            return;
-        }
-
-        if (own.isSleeping()) {
-            System.out.println("Normal Move failed due to pokemon being sleeping");
-            return;
-        }
-
-        double effectivity = 1;
-        for (ElementType e : enemy.getElementTypes()) {
-            effectivity *= EffectivityPool.getEffectivity(this.elementType, e);
-        }
-        if (own.getEffect().equals(StatusCondition.BURN)) {
-            double damage = (this.basePower * own.getStats().getAttack()/enemy.getStats().getDefense() + 2) * Math.random()*(1-0.85+1)+0.85 * effectivity * 0.125 * enemy.getStats().getMaxHP();
-            enemy.getStats().decreaseHP(damage);
-        } else {
-            double damage = (this.basePower * own.getStats().getAttack()/enemy.getStats().getDefense() + 2) * Math.random()*(1-0.85+1)+0.85 * effectivity;
+            /** EXECUTE */
+            Random random = new Random();
+            double damage = (this.basePower * own.getStats().getAttack()/enemy.getStats().getDefense() + 2) * ((random.nextInt(100 - 85) + 85) * 0.01) * effectivity * own.burnMultiplier();
             enemy.getStats().decreaseHP(damage);
             System.out.println("Mengeksekusi Normal Move, damage : " + damage);
+
+        } else {
+            System.out.println("Move out of ammunition");
         }
     }
 }
