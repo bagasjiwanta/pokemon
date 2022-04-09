@@ -1,34 +1,28 @@
 package com.monstersaku;
-import com.monstersaku.pools.EffectivityPool;
-import com.monstersaku.pools.MonsterPool;
-import com.monstersaku.util.CSVReader;
-import java.io.File;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Scanner;
-import java.util.ArrayList;
 
-public class Main {
-    public static Scanner scanner = new Scanner(System.in);
+public class Help {
+    
+    public Help(){}
+    public void start(){
+        System.out.println("Help: ");
+        System.out.println("Deskripsi permainan: ");
+        System.out.println("1. Monster saku adalah game bergenre turn-based RPG. Permainan ini dimainkan tepat oleh 2 orang.");
+        System.out.println("2. Setiap pemain akan diberikan 6 monster secara random kemudian setiap pemain akan melakukan giliran mereka secara bergantian.");
+        System.out.println("3. Setiap turn, pemain dapat melakukan gerakan monster atau pergantian monster.");
+        System.out.println("4. Eksekusi gerakan/pergantian monster terjadi apabila semua player telah menentukan apa yang dilakukan pada round tersebut.");
+        System.out.println("5. Pergantan monster selalu dilakukan lebih dahulu dibandingkan move monster.");
+        System.out.println("6. Setiap pemain akan melakukan hal ini terus-menerus hingga keenam monster lawan telah terkalahkan.\n");
+        System.out.println("Cara bermain: ");
+        System.out.println("1. Masukkan 1 di menu awal.");
+        System.out.println("2. Masukkan 1 untuk melakukan move monster atau tekan 2 untuk melakukan switch monster.");
+        System.out.println("3. Jika melakukan move, maka program akan menampilkan move yang monster miliki, pilih salah satu move untuk mengeksekusinya.");
+        System.out.println("4. Jika melakukan switch, maka program akan menampilkan yang monster dimiliki, pilih salah satu monster untuk melakukan switch.");
+        System.out.println("5. Tunggu pemain selanjutnya untuk melakukan hal yang sama.");
+        System.out.println("6. Aksi setiap pemain akan dieksekusi.");
+        System.out.println("7. Ulangi hingga salah satu player kehabisan monster untuk digunakkan.");
+    }
 
-    private static final List<String> CSV_FILE_PATHS = Arrays.asList(
-            "configs/monsterpool.csv",
-            "configs/movepool.csv",
-            "configs/element-type-effectivity-chart.csv");
-    public static void main(String[] args) {
-        List<CSVReader> readers = new ArrayList<CSVReader>();
-
-        for (String fileName : CSV_FILE_PATHS) {
-            try {
-                readers.add(new CSVReader(new File(Main.class.getResource(fileName).toURI()), ";"));
-            } catch (Exception e) { }
-        }
-        MonsterPool.setReader(readers.get(0));
-        Monster.setReader(readers.get(1));
-        EffectivityPool.setReader(readers.get(2));
-        
-        EffectivityPool.readEffectivities();
-
+    public void menuMessage(){
         String art = """
             ███╗   ███╗ ██████╗ ███╗   ██╗███████╗████████╗███████╗██████╗     ███████╗ █████╗ ██╗  ██╗██╗   ██╗
             ████╗ ████║██╔═══██╗████╗  ██║██╔════╝╚══██╔══╝██╔════╝██╔══██╗    ██╔════╝██╔══██╗██║ ██╔╝██║   ██║
@@ -47,34 +41,6 @@ public class Main {
         System.out.println("2. Help");
         System.out.println("3. Exit");
         System.out.print("> ");
-        
-
-        //Tampilan Menu Section
-        boolean notEnd = true;
-        Help help = new Help();
-        //LOOP Menu Section
-        while(notEnd){ 
-            int operasi = Main.scanner.nextInt();
-        switch (operasi) {
-            case 1:
-            Game game = new Game("john", "doe");
-            game.start();
-            game.loop();
-              break;
-            case 2:
-                help.start();
-                System.out.print("Masukkan 1 untuk kembali ke menu: ");
-                int press1 = Main.scanner.nextInt();
-                help.menuMessage();
-              break;
-            case 3:
-                System.out.println("Exiting game...");
-                System.exit(0);
-              break;
-          }
-        }
-        
-        // new game disini
-        Main.scanner.close();
     }
+    
 }
