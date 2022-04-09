@@ -96,9 +96,10 @@ public class Monster {
 
     public void beforeEffect () {
         if (this.statusCondition == StatusCondition.SLEEP) {
-            // do this
+            Random random = new Random();
+            this.sleepCounter = random.nextInt(8 - 1) + 1;
         } else if (this.statusCondition == StatusCondition.PARALYZE) {
-            // do that
+            this.getStats().setSpeed(this.getStats().getMaxSpeed() * 0.5);
         }
     }
 
@@ -107,6 +108,12 @@ public class Monster {
             this.getStats().decreaseHP(this.getStats().getMaxHP() * 0.125);
         } else if (this.statusCondition == StatusCondition.POISON){
             this.getStats().decreaseHP(this.getStats().getMaxHP() * 0.0625);
+        } else if (this.statusCondition == StatusCondition.SLEEP) {
+            if (sleepCounter == 0) {
+                this.setCondition(StatusCondition.NONE);
+            } else {
+                sleepCounter--;
+            }
         }
     }
 

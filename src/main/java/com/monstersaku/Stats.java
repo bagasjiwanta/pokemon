@@ -12,6 +12,7 @@ public class Stats {
     private double specialDefense;
     private double speed;
     private double maxHP;
+    private double maxSpeed;
 
     public Stats (List<Double> stats) throws IllegalArgumentException {
         if (stats.size() < 6) {
@@ -24,6 +25,7 @@ public class Stats {
         setSpecialDefense(stats.get(4));
         setSpeed(stats.get(5));
         this.maxHP = stats.get(0);
+        this.maxSpeed = stats.get(5);
     }
 
     public double getHealthPoint() {
@@ -80,6 +82,10 @@ public class Stats {
 
     public double getMaxHP() {
         return this.maxHP;
+    }
+
+    public double getMaxSpeed() {
+        return this.maxSpeed;
     }
 
     public List<Double> getAll() {

@@ -57,7 +57,7 @@ public class SpecialMove extends Move {
             
             /** EXECUTE */
             Random random = new Random();
-            double damage = (this.basePower * own.getStats().getSpecialAttack()/enemy.getStats().getSpecialDefense() + 2) * ((random.nextInt(100 - 85) + 85) * 0.01) * effectivity * own.burnMultiplier();
+            double damage = (this.basePower * own.getStats().getSpecialAttack()/enemy.getStats().getSpecialDefense() + 2) * ((random.nextInt(101 - 85) + 85) * 0.01) * effectivity * own.burnMultiplier();
             enemy.getStats().decreaseHP(damage);
             System.out.println("Mengeksekusi Special Move, damage : " + damage);
 
