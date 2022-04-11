@@ -13,22 +13,6 @@ public class DefaultMove extends Move {
     }
 
     public void execute(Monster own, Monster enemy){
-        // Unlimited ammunition
-        if (doesItMiss()) {
-            System.out.println("Default Move miss");
-            return;
-        }
-
-        if (own.isParalyzed()) {
-            System.out.println("Default Move failed due to pokemon being paralyzed");
-            return;
-        }
-
-        if (own.isSleeping()) {
-            System.out.println("Default Move failed due to pokemon being sleeping");
-            return;
-        }
-
         double effectivity = 1;
         for (ElementType e : enemy.getElementTypes()) {
             effectivity *= EffectivityPool.getEffectivity(this.elementType, e);

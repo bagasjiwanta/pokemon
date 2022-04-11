@@ -111,12 +111,19 @@ public class Monster {
 
     public void afterEffect () {
         if (this.statusCondition == StatusCondition.BURN) {
+            System.out.print(this.nama + " terkena BURN, HP " + this.nama + " berkurang dari " +
+                this.getStats().getHealthPoint() + " menjadi ");
             this.getStats().decreaseHP(this.getStats().getMaxHP() * 0.125);
+            System.out.println(this.getStats().getHealthPoint());
         } else if (this.statusCondition == StatusCondition.POISON){
+            System.out.print(this.nama + " terkena POISON, HP " + this.nama + " berkurang dari " +
+                this.getStats().getHealthPoint() + " menjadi ");
             this.getStats().decreaseHP(this.getStats().getMaxHP() * 0.0625);
+            System.out.println(this.getStats().getHealthPoint());
         } else if (this.statusCondition == StatusCondition.SLEEP) {
             if (sleepCounter == 1) {
                 this.setCondition(StatusCondition.NONE);
+                System.out.println(this.nama + " terbangun");
             }
             sleepCounter--;
         }

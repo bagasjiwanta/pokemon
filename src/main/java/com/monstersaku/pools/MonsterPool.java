@@ -35,7 +35,7 @@ public class MonsterPool {
         // klo ad yg mati di print
         System.out.println("\nMonster yang dimiliki : " + pname);
         for (int i = 0;i < 6;i++) {
-            System.out.println(i + ". " + monsterList.get(i).getNama());
+            System.out.println((i+1) + ". " + monsterList.get(i).getNama());
         }
     }
 
@@ -130,16 +130,34 @@ public class MonsterPool {
     }
 
     public int howManyAliveMonsters () {
-        return 6;
+        int ret = 0;
+
+        for (Monster m : this.monsterList) {
+            if (m.getStats().getHealthPoint() > 0) {
+                ret++;
+            }
+        }
+
+        return ret;
     }
 
-    public void switchPokemon (int index) {
+    public boolean switchPokemon (int index) {
+        if (this.monsterList.get(index - 1).getStats().getHealthPoint() == 0) {
+            System.out.println("Gagal melakukan switch, " + this.monsterList.get(index - 1).getNama() + " sudah mati");
+            return false;
+        }
         this.currentMonster = index - 1;
+        System.out.println("Berhasil melakukan switch ke pokemon " + currMonster().getNama());
+        return true;
     }
 
     public void displayCurrMonster() {
+        String healthStatus = "FAINTED";
+        if (this.currMonster().getStats().getHealthPoint() != 0) {
+            healthStatus = this.currMonster().getStats().getHealthPoint() + "/" + this.currMonster().getStats().getMaxHP();
+        }
         System.out.println("Nama            : " + this.currMonster().getNama());
-        System.out.println("HP              : " + this.currMonster().getStats().getHealthPoint() + "/" + this.currMonster().getStats().getMaxHP());
+        System.out.println("HP              : " + healthStatus);
         System.out.println("Attack          : " + this.currMonster().getStats().getAttack());
         System.out.println("Defense         : " + this.currMonster().getStats().getDefense());
         System.out.println("Special Attack  : " + this.currMonster().getStats().getSpecialAttack());
@@ -148,13 +166,11 @@ public class MonsterPool {
     }
 
     public void displayMonsters () {
-        if (this.currMonster().isMonsterAlive()) {
-            System.out.println("   Monster di field : " + this.currMonster().getNama() + " " + 
-            this.currMonster().getStats().getHealthPoint() + "/" + this.currMonster().getStats().getMaxHP());
-        } else {
-            System.out.println("   Monster di field : " + this.currMonster().getNama() + " FAINTED");
-        }
-        System.out.println("   Monster di bag :");
+
+        System.out.println("\nMonster di field : ");
+        this.displayCurrMonster();
+
+        System.out.println("\nMonster di bag :");
 
         for (int i = 0; i < 6; i++) {
             String addition = "";
@@ -164,7 +180,7 @@ public class MonsterPool {
                 addition = this.monsterList.get(i).getStats().getHealthPoint() + "/" + this.monsterList.get(i).getStats().getMaxHP();
             }
             if (i != currentMonster) {
-                System.out.println("    - " + this.monsterList.get(i).getNama() + " " + addition);
+                System.out.println("[" + (i+1) + "] " + this.monsterList.get(i).getNama() + " " + addition);
             }
         }
     }

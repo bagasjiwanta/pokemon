@@ -32,36 +32,17 @@ public class SpecialMove extends Move {
 
     @Override
     public void execute(Monster own, Monster enemy) {
-        if (ammunition > 0) {
-            super.reduceAmmunition();
-            if (doesItMiss()) {
-                System.out.println("Special Move miss");
-                return;
-            }
-    
-            if (own.isParalyzed()) {
-                System.out.println("Special Move failed due to pokemon being paralyzed");
-                return;
-            }
-    
-            if (own.isSleeping()) {
-                System.out.println("Special Move failed due to pokemon being sleeping");
-                return;
-            }
-    
-            double effectivity = 1;
-            for (ElementType e : enemy.getElementTypes()) {
-                effectivity *= EffectivityPool.getEffectivity(this.elementType, e);
-            }
-            
-            /** EXECUTE */
-            Random random = new Random();
-            double damage = (this.basePower * own.getStats().getSpecialAttack()/enemy.getStats().getSpecialDefense() + 2) * ((random.nextInt(101 - 85) + 85) * 0.01) * effectivity * own.burnMultiplier();
-            enemy.getStats().decreaseHP(damage);
+        super.reduceAmmunition();
 
-        } else {
-            System.out.println("Move out of ammunition");
+        double effectivity = 1;
+        for (ElementType e : enemy.getElementTypes()) {
+            effectivity *= EffectivityPool.getEffectivity(this.elementType, e);
         }
-
-    };
+        
+        /** EXECUTE */
+        Random random = new Random();
+        double damage = (this.basePower * own.getStats().getSpecialAttack()/enemy.getStats().getSpecialDefense() + 2) * ((random.nextInt(101 - 85) + 85) * 0.01) * effectivity * own.burnMultiplier();
+        enemy.getStats().decreaseHP(damage);
+    } 
+    
 }

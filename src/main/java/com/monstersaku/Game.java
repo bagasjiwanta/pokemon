@@ -8,6 +8,7 @@ import com.monstersaku.pools.MonsterPool;
 public class Game {
     private List<MonsterPool> monsterPools;
     private List<String> playerNames;
+    private List<Integer> moves;
     private int whoseTurn;
     private int winner;
     private boolean change;
@@ -21,12 +22,22 @@ public class Game {
         this.playerNames.add(pname1);
         this.playerNames.add(pname2);
 
+        this.moves = new ArrayList<Integer>();
+
         whoseTurn = 0;
         winner = -1;
     }
 
     public String currPName () {
         return playerNames.get(whoseTurn);
+    }
+
+    public String enemyPName () {
+        int x = 0;
+        if (whoseTurn == 0) {
+            x ++;
+        }
+        return playerNames.get(x);
     }
 
     public MonsterPool currMonsters () {
@@ -48,14 +59,27 @@ public class Game {
     }
 
     public void checkForWinner () {
-        if (winner >= 0) {
-            System.out.println("Selamat kepada " + currPName() + " telah memenangkan game ini");
-            System.exit(1);
+        if(enemyMonsters().howManyAliveMonsters() == 0) {
+            System.out.println("Selamat kepada " + this.currPName() + " karena telah memenangkan game ini");
+            System.exit(0);
+        }
+
+        if(currMonsters().howManyAliveMonsters() == 0) {
+            System.out.println("Selamat kepada " + this.enemyPName() + " karena telah memenangkan game ini");
+            System.exit(0);
         }
     }
 
     public void calcAfter () {
+        if (whoseTurn == 0) {
+            return;
+        }
+        System.out.println("\nMengecek kondisi monster-monster " + enemyPName());
         for (Monster monster : enemyMonsters().getMonsters()) {
+            monster.afterEffect();
+        }
+        System.out.println("\nMengecek kondisi monster-monster " + currPName());
+        for (Monster monster : currMonsters().getMonsters()) {
             monster.afterEffect();
         }
     }
@@ -64,6 +88,37 @@ public class Game {
         for (Monster monster : currMonsters().getMonsters()) {
             monster.beforeEffect();
         }
+    }
+
+    public void execute () {
+        int first = 0;
+        int p1 = currMonsters().currMonster().getMoveById(moves.get(0)).getPriority();
+        int p2 = enemyMonsters().currMonster().getMoveById(moves.get(1)).getPriority();
+        if (p1 > p2) {
+            first = 0;
+        } else if (p1 < p2) {
+            first = 1;
+        } else if (p1 == p2) {
+            double s1 = currMonsters().currMonster().getStats().getSpeed();
+            double s2 = currMonsters().currMonster().getStats().getSpeed();
+            if (s1 > s2) {
+                first = 0;
+            } else if (s1 < s2) {
+                first = 1;
+            }
+        }
+
+        int second = 0;
+        if (first == 0) {
+            second = 1;
+        }
+        this.monsterPools.get(first).currMonster().getMoveById(moves.get(first)).execute(
+            this.monsterPools.get(first).currMonster(), 
+            this.monsterPools.get(second).currMonster());
+
+        this.monsterPools.get(second).currMonster().getMoveById(moves.get(second)).execute(
+            this.monsterPools.get(second).currMonster(), 
+            this.monsterPools.get(first).currMonster());
     }
 
     public void loop () {
@@ -77,10 +132,16 @@ public class Game {
     }
 
     public void turn () {
+        String choice;
+        // boolean exit = false;
+        if (!currMonsters().currMonster().isMonsterAlive()){
+            System.out.println(currMonsters().currMonster().getNama() + " sudah mati, ganti ke pokemon lain");
+            choice = "2";
+        } else {
         System.out.println("Pilih gerakanmu, " + this.currPName());
         System.out.println("[1] Move, [2] Switch, [3] View Monsters Info, [4] View Game Info");
         System.out.print("> ");
-        String choice = Main.scanner.next();
+        choice = Main.scanner.next();
         int input;
         switch (choice) {
             case "1" :
@@ -114,6 +175,7 @@ public class Game {
                 System.out.println("Input tidak valid");
                 change = false;
                 return;
+            }
         }
     }
 
@@ -139,11 +201,11 @@ public class Game {
 
     public void viewGameInfo() { 
         System.out.println("Game Info : ");
-        System.out.println(" Giliran : " + this.currPName());
-        System.out.println(" Monster yang sedang bertarung : ");
-        System.out.println("  Monster yang dimiliki " + this.playerNames.get(0));
+        System.out.println("Giliran : " + this.currPName());
+        System.out.println("Monster yang sedang bertarung : ");
+        System.out.println("\nMonster yang dimiliki " + this.playerNames.get(0));
         this.monsterPools.get(0).displayMonsters();
-        System.out.println("  Monster yang dimiliki " + this.playerNames.get(1));
+        System.out.println("\nMonster yang dimiliki " + this.playerNames.get(1));
         this.monsterPools.get(1).displayMonsters();
         System.out.println();
     }

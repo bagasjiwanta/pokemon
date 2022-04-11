@@ -81,5 +81,34 @@ public abstract class Move {
         return rand >= this.ammunition;
     }
 
+    public boolean isAmmoEnough() {
+        return this.ammunition != 0;
+    }
+
+    public void validateMove (Monster own) { 
+        if (!own.isMonsterAlive()) {
+            System.out.println(own.getNama() + " sudah mati, ganti ke pokemon lain");
+            return;
+        }
+
+        if (own.isSleeping()) {
+            System.out.println("Normal Move failed due to pokemon being sleeping");
+            return;
+        }
+
+        if (own.isParalyzed()) {
+            System.out.println("Normal Move failed due to pokemon being paralyzed");
+        }
+
+        if (doesItMiss()) {
+            System.out.println("Normal move miss");
+        }
+
+        if (!(this instanceof DefaultMove)) {
+            this.reduceAmmunition();
+        }
+        return;
+    }
+
     public abstract void execute (Monster source, Monster target);
 }
