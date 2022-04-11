@@ -137,6 +137,16 @@ public class MonsterPool {
         this.currentMonster = index - 1;
     }
 
+    public void displayCurrMonster() {
+        System.out.println("Nama            : " + this.currMonster().getNama());
+        System.out.println("HP              : " + this.currMonster().getStats().getHealthPoint() + "/" + this.currMonster().getStats().getMaxHP());
+        System.out.println("Attack          : " + this.currMonster().getStats().getAttack());
+        System.out.println("Defense         : " + this.currMonster().getStats().getDefense());
+        System.out.println("Special Attack  : " + this.currMonster().getStats().getSpecialAttack());
+        System.out.println("Special Defense : " + this.currMonster().getStats().getSpecialDefense());
+        System.out.println("Speed           : " + this.currMonster().getStats().getSpeed());
+    }
+
     public void displayMonsters () {
         if (this.currMonster().isMonsterAlive()) {
             System.out.println("   Monster di field : " + this.currMonster().getNama() + " " + 

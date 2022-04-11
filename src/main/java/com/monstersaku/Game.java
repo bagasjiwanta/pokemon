@@ -10,6 +10,7 @@ public class Game {
     private List<String> playerNames;
     private int whoseTurn;
     private int winner;
+    private boolean change;
 
     public Game (String pname1, String pname2) {
         this.monsterPools = new ArrayList<MonsterPool>();
@@ -91,6 +92,7 @@ public class Game {
                     currMonsters().currMonster(),
                     enemyMonsters().currMonster()
                 );
+                change = true;
                 break;
             case "2" : 
                 currMonsters().printMonsters(currPName());
@@ -98,24 +100,30 @@ public class Game {
                 System.out.print("> ");
                 input = Main.scanner.nextInt();
                 currMonsters().switchPokemon(input);
+                change = true;
                 break;
             case "3" : 
                 viewMonstersInfo();
+                change = false;
                 break;
             case "4" :
                 viewGameInfo();
+                change = false;
                 break;
             default:
                 System.out.println("Input tidak valid");
+                change = false;
                 return;
         }
     }
 
     public void changePlayer () {
-        if (this.whoseTurn == 0) {
-            this.whoseTurn ++;
-        } else {
-            this.whoseTurn --;
+        if (change) {
+            if (this.whoseTurn == 0) {
+                this.whoseTurn ++;
+            } else {
+                this.whoseTurn --;
+            }
         }
     }
 
@@ -125,7 +133,8 @@ public class Game {
     }   
 
     public void viewMonstersInfo () {
-        //
+        System.out.println("Monster Info : ");
+        this.monsterPools.get(whoseTurn).displayCurrMonster();;
     }
 
     public void viewGameInfo() { 
