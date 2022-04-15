@@ -191,7 +191,8 @@ public class Game {
 
     // function help disini
     public static void getHelp() {
-        System.out.println("HELP");
+        Help help = new Help();
+        help.start();
     }   
 
     public void viewMonstersInfo () {
