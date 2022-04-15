@@ -141,7 +141,7 @@ public class Game {
         System.out.println("Pilih gerakanmu, " + this.currPName());
         System.out.println("[1] Move, [2] Switch, [3] View Monsters Info, [4] View Game Info");
         System.out.print("> ");
-        choice = Main.scanner.next();
+        choice = Main.scanner.next();}
         int input;
         switch (choice) {
             case "1" :
@@ -156,20 +156,37 @@ public class Game {
                 change = true;
                 break;
             case "2" : 
-                
-                currMonsters().printMonsters(currPName());
+                boolean case2loop =true;
+                while(case2loop){
+                    currMonsters().printMonsters(currPName());
                 System.out.println("Pilih pokemon untuk di switch");
                 System.out.print("> ");
                 input = Main.scanner.nextInt();
                 if (input < 1 || input >6){
                     System.out.println("Invalid Input, silakan ulangi.");
                 }else{
-                    if (currMonsters().switchPokemon(input) == true){
-                        change = true;
-                    }else{
-                        change=false;
+                    if (!currMonsters().currMonster().isMonsterAlive()){
+                        if (currMonsters().switchPokemon(input) == true){
+                            change = false;
+                            case2loop=false;
+                        }else{//Gagal melakukan switch karena pokemon mati:
+
+                        }
                     }
+                    else{
+                        if (currMonsters().switchPokemon(input) == true){
+                            change = true;
+                            case2loop=false;
+                        }else{
+                            change=false;
+                            case2loop=false;
+                        }
+                    }
+                    
                 }
+                }
+
+                
                 
                 break;
             case "3" : 
@@ -185,7 +202,7 @@ public class Game {
                 change = false;
                 return;
             }
-        }
+        
     }
 
     public void changePlayer () {
