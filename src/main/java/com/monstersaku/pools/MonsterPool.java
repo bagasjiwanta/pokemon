@@ -146,6 +146,10 @@ public class MonsterPool {
             System.out.println("Gagal melakukan switch, " + this.monsterList.get(index - 1).getNama() + " sudah mati");
             return false;
         }
+        else if ((index-1) == this.currentMonster){
+            System.out.println("Tidak dapat melakukan switch ke monster yang sedang ada di field");
+            return false;
+        }
         this.currentMonster = index - 1;
         System.out.println("Berhasil melakukan switch ke pokemon " + currMonster().getNama());
         return true;

@@ -156,12 +156,21 @@ public class Game {
                 change = true;
                 break;
             case "2" : 
+                
                 currMonsters().printMonsters(currPName());
                 System.out.println("Pilih pokemon untuk di switch");
                 System.out.print("> ");
                 input = Main.scanner.nextInt();
-                currMonsters().switchPokemon(input);
-                change = true;
+                if (input < 1 || input >6){
+                    System.out.println("Invalid Input, silakan ulangi.");
+                }else{
+                    if (currMonsters().switchPokemon(input) == true){
+                        change = true;
+                    }else{
+                        change=false;
+                    }
+                }
+                
                 break;
             case "3" : 
                 viewMonstersInfo();
